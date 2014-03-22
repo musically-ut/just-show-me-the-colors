@@ -5,7 +5,20 @@ Import this library, call `justShowMeTheColors()` after the DOM has rendered,
 and see all _colors_ mentioned in the document get rendered in the _correct_
 color.
 
-Works on the following format of colors in the HTML:
+````HTML
+<html>
+    <body>
+        ...
+
+        <script src="./just.show.me.the.colors.js"></script>
+        <script>
+            justShowMeTheColors();
+        </script>
+    </body>
+</html>
+````
+
+Works on the following format of colors:
 
  - red
  - orangered
@@ -27,4 +40,3 @@ TODO
  - A _bookmarklet_ version
  - Handle text inside `svg` 
  - Not optimized for speed
-
