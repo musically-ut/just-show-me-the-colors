@@ -230,7 +230,9 @@
                 }
             } else if (childNodes[ii].nodeType === Node.ELEMENT_NODE) {
                 // Spare `<script>` tags
-                if (childNodes[ii].nodeName.toUpperCase() !== 'SCRIPT') {
+                if (childNodes[ii].nodeName.toUpperCase() !== 'SCRIPT' &&
+                    childNodes[ii].getAttribute('data-do-not-color') === null) {
+
                     replaceColorsInElement(childNodes[ii]);
                 }
             } else {
