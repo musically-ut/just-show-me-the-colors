@@ -38,14 +38,24 @@
               So I created <a href="https://github.com/musically-ut/just-show-me-the-colors">Just show me the colors</a> which can finally tell me what #d51087 and plum look like.
           </p>
 
-          <p>A simple call <code>justShowMeTheColors()</code> on the webpage will replaced all CSS3 colors present in the DOM in place with <code>span</code>s which <em>show</em> the color.</p>
+          <h3>Bookmark-let</h3>
+          <p>You can also use it as a bookmark-let. Just drag and drop this link to your bookmark bar: <a href='javascript:!function(){if("undefined"==typeof window.justShowMeTheColors){var script=document.createElement("script");script.onload=function(){window.justShowMeTheColors()},script.src="//musically-ut.github.io/just-show-me-the-colors/just-show-me-the-colors.min.js",document.body.appendChild(script)}else window.justShowMeTheColors()}();'>Show Me The Colors</a>.</p>
+
+          <h3>Use as a library</h3>
+
+          <p>Include the JS file on your page and then a simple call <code>justShowMeTheColors()</code> will replaced all CSS3 colors present in the DOM in place with <code>span</code>s which <em>show</em> the color.</p>
+
+          <h3>Features</h3>
 
           <ul>
               <li>It can handle named colors like orangered.</li>
               <li>Hex color codes like #456dad or #7ea aren't a problem either.</li>
-              <li>hsl(200, 80%, 70%) and hsla(220, 80%, 70%, 0.75) are the craze these days.</li>
+              <li>hsl(200, 80%, 70%) and hsla(20, 80%, 70%, 0.75) are also supported.</li>
               <li>So no point leaving rgb(216, 44, 216) and rgba(87,34,123, 0.7).</li>
           </ul>
+
+          <h3>Live Demo</h3>
+
           <textarea placeholder="Paste text here to see the colors come to life below..." class="content-paste-site" id="content-input"></textarea>
 
           <div id="colored-output"></div>

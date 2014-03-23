@@ -60,7 +60,7 @@ blockquote {
 code, pre {
   font-family:Monaco, Bitstream Vera Sans Mono, Lucida Console, Terminal;
   color:#333;
-  font-size:14px;
+  font-size:12px;
   font-weight: 400;
 }
 
@@ -109,15 +109,15 @@ header ul {
   padding:0;
   
   background: #eee;
-  background: -moz-linear-gradient(top, #f8f8f8 0%, #dddddd 100%);
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f8f8f8), color-stop(100%,#dddddd));
   background: -webkit-linear-gradient(top, #f8f8f8 0%,#dddddd 100%);
-  background: -o-linear-gradient(top, #f8f8f8 0%,#dddddd 100%);
-  background: -ms-linear-gradient(top, #f8f8f8 0%,#dddddd 100%);
+  background: -webkit-gradient(linear, left top, left bottom, from(#f8f8f8), to(#dddddd));
+  background: -webkit-linear-gradient(top, #f8f8f8 0%, #dddddd 100%);
   background: linear-gradient(top, #f8f8f8 0%,#dddddd 100%);
   
   border-radius:5px;
   border:1px solid #d2d2d2;
+  -webkit-box-shadow:inset #fff 0 1px 0, inset rgba(0,0,0,0.03) 0 -1px 0;
   box-shadow:inset #fff 0 1px 0, inset rgba(0,0,0,0.03) 0 -1px 0;
   width:270px;
 }
@@ -256,9 +256,20 @@ footer {
 }
 
 textarea.content-paste-site {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
     width: 100%;
     resize: vertical;
     min-height: 100px;
     outline: none;
     border: 1px solid #c1c1cc;
+}
+
+#colored-output {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: 1px dashed #c1c1cc;
+    padding: 1em;
 }
