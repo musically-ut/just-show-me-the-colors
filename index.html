@@ -30,15 +30,15 @@
 
       <section>
           <p data-do-not-color>I often run into websites which post colors in codes (like #d51087 or plum) but do not tell me what those colors look like.</p>
-          
+
           <p>To <em>see</em> these colors, I would use another tool or a different website which will translate a HTML color code to the actual color.</p>
-              
+
            <p>
               So I created <a href="https://github.com/musically-ut/just-show-me-the-colors">Just show me the colors</a> which can finally tell me what #d51087 and plum look like.
           </p>
-          
+
           <p>A simple call <code>justShowMeTheColors()</code> on the webpage will replaced all CSS3 colors present in the DOM in place with <code>span</code>s which <em>show</em> the color.</p>
-          
+
           <ul>
               <li>It can handle named colors like orangered.</li>
               <li>Hex color codes like #456dad or #7ea aren't a problem either.</li>
@@ -57,7 +57,7 @@
     </div>
     <script src="javascripts/scale.fix.js"></script>
     <script src="just-show-me-the-colors.min.js"></script>
-      
+
     <script>
         justShowMeTheColors();
         var contentInputElem = document.getElementById('content-input');
@@ -68,6 +68,17 @@
         };
         contentInputElem.onkeyup  = updateContent;
         contentInputElem.onchange = updateContent;
+    </script>
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-48119177-3', 'musically-ut.github.io');
+      ga('send', 'pageview');
+
     </script>
   </body>
 </html>
