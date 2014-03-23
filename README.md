@@ -1,7 +1,7 @@
 Just Show Me The Colors
 =======================
 
-There is a [demo](http://musically-ut.github.io/just-show-me-the-colors/) of this library in use.
+There is a [demo](http://musically-ut.github.io/just-show-me-the-colors/) of this library in use. You can also find a bookmark-let to use this there.
 
 Import this library, call `justShowMeTheColors()` after the DOM has rendered,
 and see all _colors_ mentioned in the document get rendered in the _correct_
