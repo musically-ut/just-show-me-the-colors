@@ -29,6 +29,12 @@ Works on the following format of colors:
  - rgb(123, 45, 67)
  - rgba(123, 45, 67, 0.5)
 
+If you do not want colors to be replaced in some elements, add the data attribute
+`data-do-not-color` to them and their children will be spared.
+
+If you want colors to be replaced on only one element (and all its children),
+then you can call `justShowMeTheColors(elementToColor)`.
+
 Dependencies
 ============
 
