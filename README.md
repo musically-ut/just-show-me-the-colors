@@ -45,6 +45,5 @@ None. This should be compatible with _most_ browsers out there.
 TODO
 ====
 
- - A _bookmarklet_ version
  - Handle text inside `svg` 
  - Not optimized for speed
