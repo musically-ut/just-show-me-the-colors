@@ -19,6 +19,7 @@
       <li>This should be rgba(123, 45, 67, 0.5).</li>
     </ul>
 
+    <hr>
     <svg width="200" height="50">
       <rect x="0" y="0" width="200" height="50" fill="violet"></rect>
       <text x="100" y="25" text-anchor="middle" dy="0.35em">
@@ -26,29 +27,51 @@
       </text>
     </svg>
 
+    <hr>
     <menu type="context">
       Do not color #4f1 in <code>menu[type="context"]</code>
     </menu>
 
+    <hr>
     <menu type="toolbar">
       Do color #4f1 in <code>menu[type="toolbar"]</code>
     </menu>
 
+    <hr>
     Colors in <code>body</code> should be highlighted: hsl(145, 75%, 35%).
 
+    <hr>
     <div>
       <details>
         <summary>Here is a color in <code>details > summary</code>: violet.</summary>
       </details>
     </div>
 
+    <hr>
     <div>
       <details>
          Here is a color in <code>details</code> violet. This is colored because GIGO.
       </details>
     </div>
 
+    <hr>
+    <div data-do-not-color>
+      It should be able to handle two colors next to each other:
 
-    <script>justShowMeTheColors();</script>
+      <div id="colored-output-1">
+        #a45&nbsp;orangered
+        <br/>
+        <span></span>
+        pink
+        <br/>
+      </div>
+    </div>
+
+    <hr>
+
+    <script>
+      justShowMeTheColors();
+      justShowMeTheColors(document.getElementById("colored-output-1"));
+    </script>
   </body>
 </html>

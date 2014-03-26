@@ -188,6 +188,8 @@
         'ins', 'del', 'map', 'noscript', 'a', 'object', 'video', 'audio', 'canvas'
       ];
 
+    // DEBUG!
+    window.spanValidIn = spanValidIn;
     function spanValidIn(elem) {
         var elemType = elem.nodeName.toLowerCase();
 
@@ -218,19 +220,22 @@
 
     var colorRegEx = new RegExp('(' + colorPatterns.join('|') + ')', 'i');
 
-    function replaceFirstColorInTextNode(textNode, parentElement) {
-        var text        = textNode.nodeValue,
-            colorMatch  = colorRegEx.exec(text);
+    function replaceColorInTextNode(textNode, parentElement) {
+        var colorMatch  = colorRegEx.exec(textNode.nodeValue);
 
-        if (colorMatch) {
+        var nodesAdded = 0;
+
+        while (colorMatch) {
             // A match was found. Let's get the match out.
-            var color    = colorMatch[0],
+            var text     = textNode.nodeValue,
+                color    = colorMatch[0],
                 matchIdx = colorMatch.index,
                 prefix   = text.substr(0, matchIdx),
                 suffix   = text.substr(matchIdx + color.length);
 
             if (prefix) {
                 parentElement.insertBefore(document.createTextNode(prefix), textNode);
+                nodesAdded++;
             }
 
             var colorSpanNode = document.createElement('span');
@@ -254,41 +259,34 @@
             colorSpanNode.innerHTML = color;
 
             parentElement.insertBefore(colorSpanNode, textNode);
+            nodesAdded++;
 
             if (suffix) {
                 var suffixNode = document.createTextNode(suffix);
                 parentElement.replaceChild(suffixNode, textNode);
-                return suffixNode;
+                textNode = suffixNode;
+                colorMatch = colorRegEx.exec(textNode.nodeValue);
             } else {
+                colorMatch = null;
                 parentElement.removeChild(textNode);
-                return null;
+                nodesAdded--;
             }
-        } else {
-            // No more matches, nothing to see here, move on.
-            return null;
         }
+
+        // No more matches, nothing to see here, move on.
+        return nodesAdded;
     }
 
     function replaceColorsInElement(element, parentAllowsSpans) {
-        var childNodes = element.childNodes,
-            numNodes   = childNodes.length,
-            remainingTextNode,
-            currentChild;
+        var currentChild;
 
-        for(var ii = 0; ii < numNodes; ii++) {
-            currentChild = childNodes[ii];
+        // Use the live NodeList `childNodes` here.
+        for(var ii = 0; ii < element.childNodes.length; ii++) {
+            currentChild = element.childNodes[ii];
 
             if (currentChild.nodeType === TEXT_NODE && parentAllowsSpans) {
-                remainingTextNode = currentChild;
-
-                // There probably is a better way to write this loop to capture
-                // all the color groups at once and avoid rewriting the DOM
-                // multiple times. However, modern browsers do not seem to
-                // rerender the DOM until one tries to _read_ any layout
-                // sensitive. Hence, this causes only one re-render in Chrome.
-                while (remainingTextNode) {
-                    remainingTextNode = replaceFirstColorInTextNode(remainingTextNode, element);
-                }
+                // Jump over all the nodes which have been added;
+                ii += replaceColorInTextNode(currentChild, element);
             } else if (currentChild.nodeType === ELEMENT_NODE) {
                 // Do not color the node if the user or we have set
                 // `data-do-not-color` attribute on the node.
