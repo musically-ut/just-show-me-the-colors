@@ -19,6 +19,32 @@
       <li>This should be rgba(123, 45, 67, 0.5).</li>
     </ul>
 
-      <script>justShowMeTheColors();</script>
+    <svg width="200" height="50">
+      <rect x="0" y="0" width="200" height="50" fill="violet"></rect>
+      <text x="100" y="25" text-anchor="middle" dy="0.35em">
+        Do not color #a2d in SVG.
+      </text>
+    </svg>
+
+    <menu type="context">
+      Do not color #4f1 in <code>menu[type="context"]</code>
+    </menu>
+
+    <menu type="toolbar">
+      Do color #4f1 in <code>menu[type="toolbar"]</code>
+    </menu>
+
+    Colors in <code>body</code> should be highlighted: hsl(145, 75%, 35%).
+
+    <details>
+      <summary>Here is a color in <code>details > summary</code>: violet.</summary>
+    </details>
+
+    <details>
+       Here is a color in <code>details</code> violet. This is colored because GIGO.
+    </details>
+
+
+    <script>justShowMeTheColors();</script>
   </body>
 </html>
