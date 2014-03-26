@@ -5,7 +5,7 @@
     /* The value of Node.TEXT_NODE and Node.ELEMENT_NODE as they are not defined
      * on IE7
      */
-    var TEXT_NODE = 3,
+    var TEXT_NODE    = 3,
         ELEMENT_NODE = 1;
 
     /* Determine whether the given color is a valid CSS3 color
@@ -219,23 +219,34 @@
     var colorRegEx = new RegExp('(' + colorPatterns.join('|') + ')', 'i');
 
     function replaceFirstColorInTextNode(textNode, parentElement) {
-        var textContent = textNode.textContent,
-            colorMatch  = colorRegEx.exec(textContent);
+        var text        = textNode.nodeValue,
+            colorMatch  = colorRegEx.exec(text);
 
         if (colorMatch) {
             // A match was found. Let's get the match out.
             var color    = colorMatch[0],
                 matchIdx = colorMatch.index,
-                prefix   = textContent.substr(0, matchIdx),
-                suffix   = textContent.substr(matchIdx + color.length);
+                prefix   = text.substr(0, matchIdx),
+                suffix   = text.substr(matchIdx + color.length);
 
             if (prefix) {
                 parentElement.insertBefore(document.createTextNode(prefix), textNode);
             }
 
             var colorSpanNode = document.createElement('span');
-            colorSpanNode.setAttribute('style', 'color: ' + color);
-            colorSpanNode.textContent = color;
+            try {
+                colorSpanNode.style.color = color;
+            } catch (e) {
+                // IE7 doesn't like some `color` values and throws:
+                //   'Invalid Property Value'
+                // Ignoring that error.
+            }
+
+            /* -  `textContent` is not supported in IE8 and below
+             * -  `innerText` is not supported in Firefox
+             * -> Hence, resorting to using `innerHTML`
+             */
+            colorSpanNode.innerHTML = color;
 
             parentElement.insertBefore(colorSpanNode, textNode);
 
@@ -255,7 +266,7 @@
 
     function replaceColorsInElement(element, parentAllowsSpans) {
         var childNodes = element.childNodes,
-            numNodes = childNodes.length,
+            numNodes   = childNodes.length,
             remainingTextNode,
             currentChild;
 
@@ -265,9 +276,11 @@
             if (currentChild.nodeType === TEXT_NODE && parentAllowsSpans) {
                 remainingTextNode = currentChild;
 
-                // TODO (UU): There probably is a better way to write this loop
-                // to capture all the color groups at once and avoid rewriting
-                // the DOM multiple times.
+                // There probably is a better way to write this loop to capture
+                // all the color groups at once and avoid rewriting the DOM
+                // multiple times. However, modern browsers do not seem to
+                // rerender the DOM until one tries to _read_ any layout
+                // sensitive. Hence, this causes only one re-render in Chrome.
                 while (remainingTextNode) {
                     remainingTextNode = replaceFirstColorInTextNode(remainingTextNode, element);
                 }
