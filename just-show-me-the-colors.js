@@ -188,8 +188,6 @@
         'ins', 'del', 'map', 'noscript', 'a', 'object', 'video', 'audio', 'canvas'
       ];
 
-    // DEBUG!
-    window.spanValidIn = spanValidIn;
     function spanValidIn(elem) {
         var elemType = elem.nodeName.toLowerCase();
 
