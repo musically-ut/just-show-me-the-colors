@@ -234,6 +234,11 @@
             }
 
             var colorSpanNode = document.createElement('span');
+
+            // Ensure that if executed again, we do not nest another `span`
+            // inside this `span` on re-execution
+            colorSpanNode.setAttribute('data-do-not-color', true);
+
             try {
                 colorSpanNode.style.color = color;
             } catch (e) {
@@ -285,7 +290,7 @@
                     remainingTextNode = replaceFirstColorInTextNode(remainingTextNode, element);
                 }
             } else if (currentChild.nodeType === ELEMENT_NODE) {
-                // Do not color the node if the user has set
+                // Do not color the node if the user or we have set
                 // `data-do-not-color` attribute on the node.
                 if (currentChild.getAttribute('data-do-not-color') === null) {
                     replaceColorsInElement(currentChild, spanValidIn(currentChild));
