@@ -190,6 +190,10 @@ footer {
     width:auto;
     margin:0;
   }
+    
+#colored-output {
+    white-space: pre;
+}
   
   header, section, footer {
     float:none;
@@ -272,4 +276,23 @@ textarea.content-paste-site {
     box-sizing: border-box;
     border: 1px dashed #c1c1cc;
     padding: 1em;
+}
+
+button#just-show-me-the-colors {
+    display: block;
+    margin: auto;
+    padding: 0.5em 3em;
+    border-radius: 2px;
+    border: 1px #39c solid;
+    background: #39c;
+    color: white;
+}
+
+button::-moz-focus-inner {
+  border: 0;
+}
+
+button#just-show-me-the-colors[disabled] {
+    background-color: #aaa;
+    border-color: #aaa;
 }
