@@ -2,6 +2,12 @@
 (function () {
     "use strict";
 
+    /* The value of Node.TEXT_NODE and Node.ELEMENT_NODE as they are not defined
+     * on IE7
+     */
+    var TEXT_NODE = 3,
+        ELEMENT_NODE = 1;
+
     /* Determine whether the given color is a valid CSS3 color
      * Reference: https://developer.mozilla.org/en-US/docs/Web/CSS/color_value
      */
@@ -208,7 +214,7 @@
 
 
     // Assume that the longest regEx is also the strictest (true for color names)
-    colorPatterns.sort(function (a, b) { return b.length - a.length; })
+    colorPatterns.sort(function (a, b) { return b.length - a.length; });
 
     var colorRegEx = new RegExp('(' + colorPatterns.join('|') + ')', 'i');
 
@@ -256,7 +262,7 @@
         for(var ii = 0; ii < numNodes; ii++) {
             currentChild = childNodes[ii];
 
-            if (currentChild.nodeType === Node.TEXT_NODE && parentAllowsSpans) {
+            if (currentChild.nodeType === TEXT_NODE && parentAllowsSpans) {
                 remainingTextNode = currentChild;
 
                 // TODO (UU): There probably is a better way to write this loop
@@ -265,7 +271,7 @@
                 while (remainingTextNode) {
                     remainingTextNode = replaceFirstColorInTextNode(remainingTextNode, element);
                 }
-            } else if (currentChild.nodeType === Node.ELEMENT_NODE) {
+            } else if (currentChild.nodeType === ELEMENT_NODE) {
                 // Do not color the node if the user has set
                 // `data-do-not-color` attribute on the node.
                 if (currentChild.getAttribute('data-do-not-color') === null) {
