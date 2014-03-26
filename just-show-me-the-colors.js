@@ -182,7 +182,7 @@
         'ins', 'del', 'map', 'noscript', 'a', 'object', 'video', 'audio', 'canvas'
       ];
 
-    function spanValidIn(elem, parentAllowsSpans) {
+    function spanValidIn(elem) {
         var elemType = elem.nodeName.toLowerCase();
 
         for(var ii = 0; ii < allowSpans.length; ii++) {
