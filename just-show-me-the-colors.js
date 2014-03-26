@@ -171,6 +171,42 @@
       , '\\byellowgreen\\b'
     ];
 
+    var allowSpans = [
+
+        // These elements allow `span` tags inside them natively
+        'abbr', 'address', 'article', 'aside', 'b', 'bdi', 'bdo', 'blockquote', 'body', 'button', 'caption', 'cite', 'code', 'data', 'datalist', 'dd', 'dfn', 'dialog', 'div', 'dt', 'em', 'fieldset', 'figure', 'figcaption', 'footer', 'form', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'header', 'i', 'kbd', 'label', 'legend', 'li', 'main', 'mark', 'meter', 'nav', 'output', 'p', 'pre', 'progress', 'q', 'rp', 'rt', 'ruby', 's', 'samp', 'section', 'small', 'span', 'strong', 'sub', 'sup', 'summary', 'td', 'th', 'time', 'u', 'var',
+
+        // These elements allow `span` tags inside them if their parents allow
+        // it. Since we descend into an element only if it allows span, when we
+        // reach these elements, the parent always allows `span` tags.
+        'ins', 'del', 'map', 'noscript', 'a', 'object', 'video', 'audio', 'canvas'
+      ];
+
+    function spanValidIn(elem, parentAllowsSpans) {
+        var elemType = elem.nodeName.toLowerCase();
+
+        for(var ii = 0; ii < allowSpans.length; ii++) {
+            if (allowSpans[ii] === elemType) {
+                return true;
+            }
+        }
+
+        if (elemType === 'details') {
+            // Technically allowed only if `span` is preceded by `summary`
+            // element however, we allow it unconditionally.
+            // Garbage In = Garbage Out
+            return true;
+        }
+
+        if (elemType === 'menu') {
+            // `span` are allowed only if the type of the menu is toolbar
+            return elem.getAttribute('type') === 'toolbar';
+        }
+
+        return false;
+    }
+
+
     // Assume that the longest regEx is also the strictest (true for color names)
     colorPatterns.sort(function (a, b) { return b.length - a.length; })
 
@@ -191,8 +227,6 @@
                 parentElement.insertBefore(document.createTextNode(prefix), textNode);
             }
 
-            // TODO (UU): This will fail if the parentElement is inside an
-            // `svg` Or if otherwise it cannot take a `span` child
             var colorSpanNode = document.createElement('span');
             colorSpanNode.setAttribute('style', 'color: ' + color);
             colorSpanNode.textContent = color;
@@ -213,14 +247,17 @@
         }
     }
 
-    function replaceColorsInElement(element) {
+    function replaceColorsInElement(element, parentAllowsSpans) {
         var childNodes = element.childNodes,
             numNodes = childNodes.length,
-            remainingTextNode;
+            remainingTextNode,
+            currentChild;
 
         for(var ii = 0; ii < numNodes; ii++) {
-            if (childNodes[ii].nodeType === Node.TEXT_NODE) {
-                remainingTextNode = childNodes[ii];
+            currentChild = childNodes[ii];
+
+            if (currentChild.nodeType === Node.TEXT_NODE && parentAllowsSpans) {
+                remainingTextNode = currentChild;
 
                 // TODO (UU): There probably is a better way to write this loop
                 // to capture all the color groups at once and avoid rewriting
@@ -228,12 +265,11 @@
                 while (remainingTextNode) {
                     remainingTextNode = replaceFirstColorInTextNode(remainingTextNode, element);
                 }
-            } else if (childNodes[ii].nodeType === Node.ELEMENT_NODE) {
-                // Spare `<script>` tags
-                if (childNodes[ii].nodeName.toUpperCase() !== 'SCRIPT' &&
-                    childNodes[ii].getAttribute('data-do-not-color') === null) {
-
-                    replaceColorsInElement(childNodes[ii]);
+            } else if (currentChild.nodeType === Node.ELEMENT_NODE) {
+                // Do not color the node if the user has set
+                // `data-do-not-color` attribute on the node.
+                if (currentChild.getAttribute('data-do-not-color') === null) {
+                    replaceColorsInElement(currentChild, spanValidIn(currentChild));
                 }
             } else {
                 /* Ignore all other kind of nodes */
@@ -242,7 +278,8 @@
     }
 
     function justShowMeTheColors_(optElem) {
-        replaceColorsInElement(optElem || document.body);
+        var operateOnElem = optElem || document.body;
+        replaceColorsInElement(operateOnElem, spanValidIn(operateOnElem));
     }
 
     if (typeof define === 'function' && define.amd) {
