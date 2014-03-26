@@ -37,13 +37,14 @@ If you do not want colors to be replaced in some elements, add the data attribut
 If you want colors to be replaced on only one element (and all its children),
 then you can call `justShowMeTheColors(elementToColor)`.
 
+Browser Support
+===============
+
+IE7 and up, Firefox 27, Chrome 29.
+
+It probably works on older versions of Firefox, Chrome and IE as well.
+
 Dependencies
 ============
 
 None. This should be compatible with _most_ browsers out there.
-
-TODO
-====
-
- - Handle text inside `svg` 
- - Not optimized for speed
