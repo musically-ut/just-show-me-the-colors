@@ -92,8 +92,21 @@
                                             .replace(/\s/g,'&nbsp;');
             justShowMeTheColors(coloredOutputElem);
         };
+        // Catch typing events.
+        // `onkeydown` may be fired _before_ the key is added to textarea
         contentInputElem.onkeyup  = updateContent;
+        // Catch paste events.
         contentInputElem.onchange = updateContent;
+
+        // Firefox will preserve user-entered content on page reload.
+        // See: https://bugzilla.mozilla.org/show_bug.cgi?id=654072
+        //
+        // Hence, to make sure that we have the button enabled and
+        // the content in the div updated.
+        if (showColorsButton.getAttribute('disabled') !== null) {
+            showColorsButton.removeAttribute('disabled');
+        }
+        updateContent();
     </script>
 
     <script>
