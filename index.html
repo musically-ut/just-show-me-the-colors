@@ -88,8 +88,7 @@
         function updateContent(ev) {
             // Unsanitized! But <script> tags will not execute.
             coloredOutputElem.innerHTML = contentInputElem.value
-                                            .replace(/\r?\n/g,'<br/>')
-                                            .replace(/\s/g,'&nbsp;');
+                                            .replace(/\r?\n/g,'<br/>');
             justShowMeTheColors(coloredOutputElem);
         };
         // Catch typing events.
