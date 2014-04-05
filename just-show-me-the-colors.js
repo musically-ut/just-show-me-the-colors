@@ -14,7 +14,8 @@
     var colorPatterns = [
 
       // Hex codes
-        '#[0-9a-f][0-9a-f][0-9a-f]([0-9a-f][0-9a-f][0-9a-f])?'
+        '#[0-9a-f][0-9a-f][0-9a-f](?=[^0-9a-f]|$)'
+      , '#[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f](?=[^0-9a-f]|$)'
 
       // HSL codes
       // The numbers regexs are more relaxed than what is valid
