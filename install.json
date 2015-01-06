@@ -1,0 +1,13 @@
+{
+  "resources": {
+    "head": [],
+    "body": [{
+      "type": "script",
+      "src": "./just-show-me-the-colors.min.js",
+      "moduleType": "global",
+      "exports": [ "justShowMeTheColors" ]
+    }]
+  },
+  "options": {
+  }
+}
